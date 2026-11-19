@@ -57,6 +57,33 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .cats .chip{flex:none;padding:8px 14px;border-radius:99px;background:var(--soft);font-weight:700;font-size:13px;text-decoration:none;white-space:nowrap;color:var(--ink)}
 .cats .chip.on{background:var(--price);color:#fff}
 
+/* botón animado «Cómo llegar» */
+.go{position:relative;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px 0 8px;border-radius:99px;background:linear-gradient(135deg,#2347D6,#4D7BFF);color:#fff;text-decoration:none;font:800 12px/1 var(--fb);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;box-shadow:0 8px 24px -8px rgba(77,123,255,.9);animation:goGlow 2.4s ease-in-out infinite}
+.go::before{content:"";position:absolute;inset:-4px;border-radius:inherit;border:2px solid rgba(77,123,255,.55);animation:goRing 2.4s ease-out infinite;pointer-events:none}
+.go .pin{position:relative;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.16);display:grid;place-items:center;font-style:normal}
+.go .pin svg{animation:goHop 1.2s cubic-bezier(.3,.6,.4,1) infinite}
+.go .pin::after{content:"";position:absolute;bottom:3px;left:50%;width:8px;height:3px;margin-left:-4px;border-radius:50%;background:rgba(0,0,0,.45);animation:goShadow 1.2s cubic-bezier(.3,.6,.4,1) infinite}
+.go:hover{filter:brightness(1.12)}
+@keyframes goHop{0%,100%{transform:translateY(0)}45%{transform:translateY(-5px)}}
+@keyframes goShadow{0%,100%{transform:scaleX(1);opacity:.8}45%{transform:scaleX(.5);opacity:.3}}
+@keyframes goRing{0%{transform:scale(.92);opacity:.9}80%,100%{transform:scale(1.18);opacity:0}}
+@keyframes goGlow{0%,100%{box-shadow:0 8px 24px -8px rgba(77,123,255,.9)}50%{box-shadow:0 8px 34px -4px rgba(77,123,255,1)}}
+@media(max-width:1200px){.go span{display:none}.go{padding:0;width:42px;justify-content:center}}
+@media(max-width:980px){.go{margin-left:auto}.burger{margin-left:0}}
+.gol span{display:none}.gol{padding:0;width:42px;justify-content:center;margin-left:0!important}
+/* iconos de redes */
+.soc{display:flex;gap:10px;align-items:center}
+.soc a{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;border:1.5px solid rgba(190,205,255,.3);background:rgba(13,21,56,.6);transition:transform .2s,background .2s,border-color .2s}
+.soc a:hover,.soc a:focus-visible{transform:translateY(-3px) scale(1.06);border-color:transparent}
+.soc .s-ig:hover{background:linear-gradient(45deg,#f9a825,#e1306c 50%,#833ab4)}
+.soc .s-tt:hover{background:#111;box-shadow:-2px -2px 0 #25F4EE,2px 2px 0 #FE2C55}
+.soc .s-wa:hover{background:#25D366}
+.hero .soc{margin-top:16px}
+a.ic{text-decoration:none;transition:transform .2s,filter .2s}a.ic:hover{transform:scale(1.08);filter:brightness(1.15)}
+.socl a{color:var(--ink);background:var(--soft);border-color:#D9DFF0}.socl a:hover{color:#fff}
+.logo b{white-space:nowrap}
+@media(max-width:380px){.logo b{font-size:18px}.logo{gap:7px}}
+@media(max-width:420px){.logo b{font-size:21px}.logo img{width:38px;height:38px}.bar{gap:6px}.ib{width:40px;height:40px}}
 /* banda de mesa */
 .mesa{background:var(--price);color:#fff;font-weight:700;font-size:14px}
 .mesa .wrap{display:flex;gap:10px;align-items:center;min-height:40px;padding-block:6px}
@@ -175,6 +202,7 @@ textarea.inp{min-height:84px;resize:vertical}
     <div class="bar">
       <a class="logo" href="index.html" aria-label="Volver a la web de Blue Lounge Bar"><img src="img/logo-192.png" alt=""><b>Blue <span>Lounge</span></b></a>
       <div class="sp"></div>
+      <a class="go gol" href="https://www.google.com/maps/dir/?api=1&amp;destination=Calle+Van+Gogh+6%2C+45224+Sese%C3%B1a%2C+Toledo" target="_blank" rel="noopener" aria-label="Cómo llegar a Blue Lounge Bar"><i class="pin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></i><span>Cómo llegar</span></a>
       <button class="ib" data-act="account" aria-label="Mi cuenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A1030" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button>
       <button class="ib" id="sBtn" aria-label="Buscar en la carta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A1030" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
       <button class="ib" data-act="nav" aria-label="Abrir menú"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0A1030" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
@@ -188,7 +216,7 @@ textarea.inp{min-height:84px;resize:vertical}
   <div class="intro"><h1>Nuestra <span>carta</span></h1><p>Toca un producto para añadirlo a tu pedido. Te lo llevamos a la mesa y pagas al final, en barra.</p></div>
   <div id="list"></div>
 </main>
-<footer class="foot"><div class="wrap"><span>Blue Lounge Bar · C. Van Gogh 6, Seseña · IVA incluido</span><a href="index.html">Volver a la web</a><a href="index.html#reservas">Reservar mesa</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Calle+Van+Gogh+6%2C+45224+Sese%C3%B1a%2C+Toledo" target="_blank" rel="noopener">Cómo llegar</a><a href="https://www.instagram.com/bluelounge_bar/" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@bluelounge_bar" target="_blank" rel="noopener">TikTok</a><button data-act="legal" style="text-decoration:underline">Privacidad</button></div></footer>
+<footer class="foot"><div class="wrap"><span>Blue Lounge Bar · C. Van Gogh 6, Seseña · IVA incluido</span><a href="index.html">Volver a la web</a><a href="index.html#reservas">Reservar mesa</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Calle+Van+Gogh+6%2C+45224+Sese%C3%B1a%2C+Toledo" target="_blank" rel="noopener">Cómo llegar</a><div class="soc socl" aria-label="Redes sociales"><a href="https://www.instagram.com/bluelounge_bar/" target="_blank" rel="noopener" aria-label="Instagram de Blue Lounge Bar" class="s-ig"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a><a href="https://www.tiktok.com/@bluelounge_bar" target="_blank" rel="noopener" aria-label="TikTok de Blue Lounge Bar" class="s-tt"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 3.35-2.49V9.66a5.69 5.69 0 0 0-.75-.05 5.68 5.68 0 1 0 5.68 5.68V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.3 4.3 0 0 1-3.24-1.48z"/></svg></a><a href="https://wa.me/34614261784" target="_blank" rel="noopener" aria-label="WhatsApp de Blue Lounge Bar" class="s-wa"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.2-.1-1-.4-2-1.2-.7-.7-1.2-1.5-1.4-1.7-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.1 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3z"/></svg></a></div><button data-act="legal" style="text-decoration:underline">Privacidad</button></div></footer>
 
 <!-- elementos que usa el pedido -->
 <div id="whoName" hidden></div><div id="whoIni" hidden></div>
