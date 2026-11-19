@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /tpv
+Disallow: /tpv.html
+Disallow: /api/
+
+Sitemap: https://bluelonguebar.com/sitemap.xml

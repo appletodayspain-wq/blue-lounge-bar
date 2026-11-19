@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Carta · Blue Lounge Bar</title>
+<meta name="description" content="Carta de Blue Lounge Bar en Seseña: raciones colombianas, cócteles, ginebras, rones, granizados y cachimbas. Pide desde tu mesa.">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:title" content="La carta de Blue Lounge Bar">
+<meta property="og:description" content="Raciones colombianas, cócteles, copas y cachimbas en Seseña. Pide desde tu mesa.">
+<meta property="og:image" content="https://bluelonguebar.com/img/og.jpg">
+<meta property="og:url" content="https://bluelonguebar.com/carta.html">
+<link rel="icon" type="image/png" href="img/logo-64.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+/* Carta en lista, papel blanco: foto a la izquierda, nombre — puntos — precio, descripción debajo.
+   Los tokens oscuros siguen definidos para las ventanas de pedido, que comparten estilo con la web. */
+:root{
+  --paper:#FFFFFF; --ink:#0A1030; --gray:#6B7391; --dots:#B7BFD8; --price:#2347D6; --soft:#F2F5FD;
+  --bg:#04071A; --bg2:#080E2A; --card:#0D1538; --line:rgba(190,205,255,.13);
+  --blue:#2347D6; --neon:#4D7BFF; --ice:#DCE6FF; --muted:#A3AED6; --ok:#2EC48C; --live:#FF4D6D;
+  --fd:'Big Shoulders Display',Impact,'Arial Narrow',sans-serif;
+  --fb:'Figtree',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --gx:max(16px,env(safe-area-inset-left,0px)); --gxr:max(16px,env(safe-area-inset-right,0px));
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:136px}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 var(--fb);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--price);outline-offset:3px}
+[hidden]{display:none!important}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:860px;margin:0 auto;padding-left:var(--gx);padding-right:var(--gxr)}
+
+/* cabecera */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 2px 16px rgba(10,16,48,.07)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:#fff}
+.bar{display:flex;align-items:center;gap:12px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{width:44px;height:44px;border-radius:50%}
+.logo b{font:900 26px/1 var(--fd);letter-spacing:.03em;text-transform:uppercase}
+.logo b span{color:var(--price)}
+.bar .sp{flex:1}
+.ib{width:44px;height:44px;display:grid;place-items:center;border-radius:50%}
+.ib:hover{background:var(--soft)}
+.sbox{padding-bottom:10px}
+.sbox input{width:100%;min-height:46px;padding:0 16px;border:1.5px solid #D9DFF0;border-radius:23px;background:var(--soft);color:var(--ink);font-size:16px}
+.sbox input:focus{outline:none;border-color:var(--price);background:#fff}
+.cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:12px}
+.cats::-webkit-scrollbar{display:none}
+.cats .chip{flex:none;padding:8px 14px;border-radius:99px;background:var(--soft);font-weight:700;font-size:13px;text-decoration:none;white-space:nowrap;color:var(--ink)}
+.cats .chip.on{background:var(--price);color:#fff}
+
+/* banda de mesa */
+.mesa{background:var(--price);color:#fff;font-weight:700;font-size:14px}
+.mesa .wrap{display:flex;gap:10px;align-items:center;min-height:40px;padding-block:6px}
+.mesa b{font:900 18px/1 var(--fd);letter-spacing:.05em;text-transform:uppercase}
+
+/* portada */
+.intro{padding-block:28px 6px}
+.intro h1{font:900 clamp(54px,12vw,92px)/.9 var(--fd);text-transform:uppercase;margin:0}
+.intro h1 span{color:var(--price)}
+.intro p{color:var(--gray);margin:10px 0 0;max-width:520px}
+
+/* lista */
+.cs{padding-top:26px}
+.cs h2{font:900 40px/1 var(--fd);text-transform:uppercase;margin:0 0 6px;display:flex;align-items:center;gap:14px}
+.cs h2::after{content:"";flex:1;height:3px;background:var(--price);opacity:.9}
+.mi{display:grid;grid-template-columns:96px minmax(0,1fr) 40px;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid #EEF1F8;cursor:pointer}
+.mi.off{cursor:default;opacity:.55}
+.mi:hover h3{color:var(--price)}
+.th{width:96px;height:96px;border-radius:18px;overflow:hidden;background:var(--card);display:grid;place-items:center;box-shadow:0 6px 16px -8px rgba(10,16,48,.45)}
+.th img{width:100%;height:100%;object-fit:cover}
+.th svg{width:100%;height:100%}
+.nl{display:flex;align-items:baseline;gap:10px}
+.nl h3{font:800 23px/1.15 var(--fb);letter-spacing:-.01em;margin:0;min-width:0;transition:color .15s}
+.nl h3 em{font:800 10px var(--fb);font-style:normal;letter-spacing:.12em;text-transform:uppercase;background:var(--price);color:#fff;padding:3px 7px;border-radius:99px;vertical-align:middle;margin-left:4px}
+.dots{flex:1;min-width:24px;border-bottom:3px dotted var(--dots);transform:translateY(-6px)}
+.pr{font:700 22px/1 var(--fb);color:var(--price);white-space:nowrap}
+.pr small{font-size:12px;color:var(--gray);font-weight:600}
+.mt p{margin:6px 0 0;color:var(--gray);font-size:16px;line-height:1.4}
+.mt p.ox{color:var(--price);font-size:13px;font-weight:700}
+.addc{width:40px;height:40px;border-radius:50%;background:var(--price);color:#fff;font-size:24px;line-height:1;display:grid;place-items:center;box-shadow:0 6px 16px -6px rgba(35,71,214,.8)}
+.addc:hover{background:#2B55F0}
+@media(max-width:520px){
+  .mi{grid-template-columns:76px minmax(0,1fr) 36px;gap:12px}
+  .th{width:76px;height:76px;border-radius:14px}
+  .nl{flex-wrap:wrap;gap:2px 8px}
+  .nl h3{font-size:19px;flex-basis:100%}
+  .dots{display:none}
+  .mt p{font-size:14px}
+  .pr{font-size:18px;order:3}
+  .addc{width:36px;height:36px;font-size:22px}
+}
+.none{color:var(--gray);padding:30px 0}
+.foot{margin-top:40px;padding-block:28px calc(110px + env(safe-area-inset-bottom,0px));background:var(--soft);color:var(--gray);font-size:14px}
+.foot .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+.foot a{color:var(--ink);font-weight:700}
+
+/* ventanas de pedido y registro (mismo estilo que la web) */
+.sheet{color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 26px;font:800 15px/1 var(--fb);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .15s,background .15s,box-shadow .15s}
+.btn.solid{background:var(--blue);color:#fff;box-shadow:0 10px 30px -10px rgba(35,71,214,.9)}
+.btn.solid:hover{background:#2B55F0;box-shadow:0 0 0 1px var(--neon),0 14px 40px -8px rgba(77,123,255,.9)}
+.sheet .btn.line{border:1.5px solid #fff;color:#fff}
+.btn.line:hover{background:#fff;color:var(--bg)}
+.btn.sm{min-height:40px;padding:0 16px;font-size:13px}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+form.f{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+form.f .full{grid-column:1/-1}
+@media(max-width:480px){form.f{grid-template-columns:minmax(0,1fr)}}
+label.l{display:grid;gap:6px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.inp{width:100%;min-height:50px;padding:12px 14px;background:var(--bg);border:1px solid var(--line);color:#fff;font-size:16px;letter-spacing:0;text-transform:none;font-weight:500;border-radius:0}
+.inp:focus{border-color:var(--neon);outline:none}
+textarea.inp{min-height:84px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ice);text-transform:none;letter-spacing:0;font-weight:500}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--blue);flex:none}
+
+/* carrito flotante */
+.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:center;gap:14px;padding:14px 22px;background:var(--blue);color:#fff;box-shadow:0 14px 40px -6px rgba(35,71,214,.95),0 0 0 1px rgba(255,255,255,.15);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:14px;max-width:calc(100% - 32px);white-space:nowrap}
+.fab .n{background:#fff;color:var(--blue);min-width:26px;height:26px;border-radius:13px;display:grid;place-items:center;font-size:13px}
+.fab b{font:900 22px/1 var(--fd);letter-spacing:.02em}
+
+/* modales y panel lateral */
+.scrim{position:fixed;inset:0;z-index:70;background:rgba(2,4,14,.72);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:560px;max-height:92vh;overflow:auto;background:var(--bg2);border:1px solid var(--line);padding:24px var(--gxr) calc(24px + env(safe-area-inset-bottom,0px)) var(--gx);animation:up .2s ease-out}
+@media(min-width:640px){.scrim{align-items:center}.sheet{padding:28px}}
+.side .sheet{max-width:460px;height:100%;max-height:none;margin-left:auto}
+@media(min-width:640px){.scrim.side{align-items:stretch;justify-content:flex-end}}
+@keyframes up{from{transform:translateY(24px);opacity:.3}to{transform:none;opacity:1}}
+.mh{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
+.mh h3{font:900 36px/.95 var(--fd);text-transform:uppercase;margin:0}
+.mh p{margin:6px 0 0;color:var(--muted);font-size:14px}
+.mh .x{margin-left:auto;width:42px;height:42px;border:1px solid var(--line);font-size:20px;flex:none}
+.og{margin-bottom:18px}
+.og h5{display:flex;align-items:center;gap:10px;margin:0 0 10px;font:800 13px var(--fb);letter-spacing:.14em;text-transform:uppercase}
+.req{font-size:10px;padding:3px 8px;background:var(--live);color:#fff;letter-spacing:.1em}
+.req.ok{background:var(--ok);color:#04140D}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{padding:10px 14px;border:1px solid var(--line);background:var(--card);font-weight:700;font-size:14px}
+.opt.on{background:var(--blue);border-color:var(--blue)}
+.mfoot{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.mfoot .btn{flex:1;letter-spacing:.06em;padding:0 14px;white-space:nowrap}
+.cl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.qty{display:flex;align-items:center;border:1px solid var(--line)}
+.qty button{width:36px;height:36px;font-size:18px;font-weight:700;color:var(--neon)}
+.qty span{min-width:22px;text-align:center;font-weight:800}
+.cl b{display:block;font-weight:700;overflow-wrap:anywhere}
+.cl small{color:var(--muted)}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin:18px 0}
+.tot b{font:900 40px/1 var(--fd)}
+.seg{display:flex;border:1px solid var(--line);padding:4px;gap:4px;background:var(--bg)}
+.seg button{flex:1;min-height:42px;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.seg button.on{background:var(--blue);color:#fff}
+.hist{display:grid;gap:10px}
+.hist div{border:1px solid var(--line);padding:12px;font-size:14px}
+.hist b{display:block}
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(14px + env(safe-area-inset-top,0px));z-index:90;background:#fff;color:var(--bg);font-weight:700;padding:12px 18px;max-width:calc(100% - 32px);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.legal{font-size:13px;color:var(--muted)}
+.legal h4{color:#fff;margin:18px 0 6px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+<link rel="canonical" href="https://bluelonguebar.com/carta.html">
+</head>
+<body data-page="carta">
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <a class="logo" href="index.html" aria-label="Volver a la web de Blue Lounge Bar"><img src="img/logo-192.png" alt=""><b>Blue <span>Lounge</span></b></a>
+      <div class="sp"></div>
+      <button class="ib" data-act="account" aria-label="Mi cuenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A1030" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button>
+      <button class="ib" id="sBtn" aria-label="Buscar en la carta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A1030" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+      <button class="ib" data-act="nav" aria-label="Abrir menú"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0A1030" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+    <div class="sbox" id="sBox" hidden><input id="q" type="search" placeholder="Buscar: mojito, alitas, cachimba…" autocomplete="off"></div>
+    <nav class="cats" id="cats" aria-label="Categorías"></nav>
+  </div>
+</header>
+<div class="mesa" id="mesaBand" hidden><div class="wrap"><b id="mesaName">Mesa</b><span>Pide aquí y te lo llevamos. Pagas al final.</span></div></div>
+<main class="wrap">
+  <div class="intro"><h1>Nuestra <span>carta</span></h1><p>Toca un producto para añadirlo a tu pedido. Te lo llevamos a la mesa y pagas al final, en barra.</p></div>
+  <div id="list"></div>
+</main>
+<footer class="foot"><div class="wrap"><span>Blue Lounge Bar · C. Van Gogh 6, Seseña · IVA incluido</span><a href="index.html">Volver a la web</a><a href="index.html#reservas">Reservar mesa</a><button data-act="legal" style="text-decoration:underline">Privacidad</button></div></footer>
+
+<!-- elementos que usa el pedido -->
+<div id="whoName" hidden></div><div id="whoIni" hidden></div>
+<button class="fab" id="fab" data-act="cart" hidden><span class="n" id="fabN">0</span><span>Tu pedido</span><b id="fabT">0 €</b></button>
+<div class="scrim" id="modal" hidden><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast" hidden></div>
+<script src="app.js?v=2"></script>
+<script>
+(function(){const b=document.getElementById('sBtn'),x=document.getElementById('sBox');b.addEventListener('click',()=>{x.hidden=!x.hidden;if(!x.hidden)x.querySelector('input').focus()})})();
+</script>
+</body>
+</html>

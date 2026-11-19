@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Blue Lounge Bar · Seseña | Cócteles, cachimbas y fútbol</title>
+<meta name="description" content="Cócteles de autor, cachimbas premium, billar y todo el fútbol en pantalla gigante. Pide desde tu mesa y reserva en Blue Lounge Bar, C. Van Gogh 6, Seseña.">
+<meta name="theme-color" content="#04071A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Blue Lounge Bar">
+<meta property="og:title" content="Blue Lounge Bar · La noche Blue empieza aquí">
+<meta property="og:description" content="Cócteles, cachimbas, billar y fútbol en directo en Seseña. Pide desde tu mesa o reserva en un minuto.">
+<meta property="og:image" content="https://bluelonguebar.com/img/og.jpg">
+<meta property="og:url" content="https://bluelonguebar.com/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="img/logo-64.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+/* Concepto: la plantilla de referencia (negro, titular enorme con palabra de acento, tarjetas con foto y flechas)
+   pasada al azul real del logo y al blanco. Un solo tema oscuro, como el local de noche. */
+:root{
+  color-scheme:dark;
+  --bg:#04071A;      /* noche */
+  --bg2:#080E2A;     /* bandas */
+  --card:#0D1538;    /* superficies */
+  --line:rgba(190,205,255,.13);
+  --blue:#2347D6;    /* azul del logo */
+  --neon:#4D7BFF;    /* acento luminoso */
+  --ice:#DCE6FF;
+  --fg:#FFFFFF;
+  --muted:#A3AED6;
+  --ok:#2EC48C; --live:#FF4D6D;
+  --fd:'Big Shoulders Display',Impact,'Arial Narrow',sans-serif;
+  --fb:'Figtree',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --gx:max(18px,env(safe-area-inset-left,0px));
+  --gxr:max(18px,env(safe-area-inset-right,0px));
+  --w:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--fb);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--neon);outline-offset:3px}
+.wrap{max-width:var(--w);margin:0 auto;padding-left:var(--gx);padding-right:var(--gxr)}
+.num{font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+
+/* barra de aviso */
+.ticker{background:#0B1235;border-bottom:1px solid var(--line);font-size:13px;overflow:hidden;white-space:nowrap}
+.ticker .in{display:inline-flex;gap:48px;padding:9px 0;animation:tick 38s linear infinite}
+.ticker b{font-weight:800;letter-spacing:.06em}
+.ticker span{color:var(--ice)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* cabecera */
+header.top{position:sticky;top:0;z-index:40;background:rgba(4,7,26,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:22px;height:76px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{width:52px;height:52px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.12),0 0 28px rgba(77,123,255,.55)}
+.brand b{font:900 22px/1 var(--fd);letter-spacing:.04em;text-transform:uppercase}
+.brand small{display:block;font:600 10px/1.2 var(--fb);letter-spacing:.22em;color:var(--muted);text-transform:uppercase;margin-top:3px}
+nav.menu{display:flex;gap:26px;margin-left:auto}
+nav.menu a{text-decoration:none;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ice)}
+nav.menu a:hover{color:var(--neon)}
+.hbtns{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 26px;font:800 15px/1 var(--fb);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .15s,background .15s,box-shadow .15s}
+.btn.solid{background:var(--blue);color:#fff;box-shadow:0 10px 30px -10px rgba(35,71,214,.9)}
+.btn.solid:hover{background:#2B55F0;box-shadow:0 0 0 1px var(--neon),0 14px 40px -8px rgba(77,123,255,.9)}
+.btn.line{border:1.5px solid #fff;color:#fff}
+.btn.line:hover{background:#fff;color:var(--bg)}
+.btn.sm{min-height:40px;padding:0 16px;font-size:13px}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.who{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border:1px solid var(--line);border-radius:99px;font-weight:700;font-size:13px;white-space:nowrap}
+.who i{width:30px;height:30px;border-radius:50%;background:var(--blue);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:12px}
+.burger{display:none;width:46px;height:46px;border:1px solid var(--line);border-radius:4px}
+.burger svg{margin:auto}
+@media(max-width:980px){nav.menu{display:none}.burger{display:grid;margin-left:auto}.hbtns .btn{display:none}}
+@media(max-width:520px){.brand small{display:none}.who span{display:none}.who{padding:6px}}
+.drawer-nav{position:fixed;inset:0;z-index:60;background:rgba(4,7,26,.97);display:flex;flex-direction:column;padding:90px var(--gxr) 30px var(--gx);gap:6px}
+.drawer-nav a{font:900 44px/1.1 var(--fd);text-transform:uppercase;text-decoration:none}
+.drawer-nav a:hover{color:var(--neon)}
+.drawer-nav .x{position:absolute;top:18px;right:var(--gxr);width:48px;height:48px;border:1px solid var(--line);font-size:22px}
+
+/* banda de mesa */
+.mesa-band{background:linear-gradient(90deg,var(--blue),#1A35A8);font-weight:700;font-size:14px}
+.mesa-band .wrap{display:flex;align-items:center;gap:12px;min-height:46px;flex-wrap:wrap;padding-block:6px}
+.mesa-band b{font:900 20px/1 var(--fd);letter-spacing:.06em;text-transform:uppercase}
+.mesa-band a{margin-left:auto;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;min-height:min(86vh,820px);display:flex;align-items:center}
+.hero .ph{position:absolute;top:0;bottom:0;right:0;width:62%;background:url(img/maracumango.webp) center 35%/cover no-repeat}
+.hero .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,rgba(4,7,26,.6) 30%,rgba(4,7,26,.05) 70%),linear-gradient(0deg,var(--bg) 0%,transparent 26%)}
+.hero .wrap{position:relative;width:100%;padding-block:90px 110px}
+.hero h1{font:900 clamp(64px,10.5vw,148px)/.86 var(--fd);text-transform:uppercase;margin:0;letter-spacing:.005em}
+.hero h1 em{font-style:normal;color:var(--neon);text-shadow:0 0 24px rgba(77,123,255,.65),0 0 70px rgba(35,71,214,.6)}
+.hero p{max-width:470px;font-size:19px;color:var(--ice);margin:26px 0 34px}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hero .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+.chipx{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid var(--line);border-radius:99px;font-size:13px;font-weight:600;color:var(--ice);background:rgba(255,255,255,.03)}
+.chipx i{width:8px;height:8px;border-radius:50%;background:var(--live);box-shadow:0 0 10px var(--live);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+@media(max-width:760px){
+  .hero{min-height:auto;align-items:flex-end}
+  .hero .ph{width:100%;background:url(img/maracumango.webp) 70% 20%/cover no-repeat}
+  .hero .ph::after{background:linear-gradient(0deg,var(--bg) 8%,rgba(4,7,26,.86) 48%,rgba(4,7,26,.35) 100%)}
+  .hero .wrap{padding-block:240px 60px}
+  .hero p{font-size:17px}
+}
+
+/* secciones */
+section.s{padding-block:96px}
+section.alt{background:var(--bg2);border-block:1px solid var(--line)}
+.shead{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:34px}
+.shead h2{font:900 clamp(44px,6vw,76px)/.92 var(--fd);text-transform:uppercase;margin:0}
+.shead h2 em{font-style:normal;color:var(--neon)}
+.shead p{margin:10px 0 0;color:var(--muted);max-width:560px}
+.shead .sp{flex:1}
+.arrows{display:flex;gap:10px;align-items:center}
+.arrows .lnk{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:14px;text-decoration:none;margin-right:10px}
+.arr{width:50px;height:50px;display:grid;place-items:center;border:1.5px solid #fff}
+.arr.f{background:var(--blue);border-color:var(--blue)}
+.arr:hover{border-color:var(--neon)}
+
+/* destacados */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 2*28px)/3);gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:6px}
+.rail::-webkit-scrollbar{display:none}
+@media(max-width:900px){.rail{grid-auto-columns:72%}}
+@media(max-width:520px){.rail{grid-auto-columns:84%;gap:16px}}
+.feat{scroll-snap-align:start;text-decoration:none;display:block}
+.feat .im{aspect-ratio:4/3;overflow:hidden;background:var(--card)}
+.feat .im img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.feat:hover .im img{transform:scale(1.05)}
+.feat h3{font:800 28px/1 var(--fd);text-transform:uppercase;letter-spacing:.02em;margin:22px 0 10px}
+.feat p{margin:0;color:var(--ice);font-size:15px}
+.feat .more{display:inline-block;margin-top:16px;font-weight:800;letter-spacing:.14em;font-size:13px;text-transform:uppercase}
+.feat:hover .more{color:var(--neon)}
+
+/* carta */
+.ctools{position:sticky;top:76px;z-index:20;background:var(--bg2);padding:12px 0;margin-bottom:10px;border-bottom:1px solid var(--line)}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:9px 16px;border:1px solid var(--line);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ice);background:var(--card);white-space:nowrap}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.search{width:100%;max-width:380px;min-height:46px;margin-top:12px;padding:0 16px;background:var(--bg);border:1px solid var(--line);color:#fff}
+.search:focus{border-color:var(--neon);outline:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:22px}
+.item{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);min-width:0}
+.item .pimg{aspect-ratio:4/3;overflow:hidden;position:relative;background:linear-gradient(160deg,#121C4A,#0A1030)}
+.item .pimg img{width:100%;height:100%;object-fit:cover}
+.item .pimg svg{width:62%;height:auto;margin:6% auto 0;display:block}
+.item .body{padding:16px 16px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.item h4{font:800 24px/1.02 var(--fd);text-transform:uppercase;margin:0;letter-spacing:.01em}
+.item p{margin:0;color:var(--muted);font-size:14px;line-height:1.4}
+.item .foot{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:10px}
+.price{font:900 26px/1 var(--fd);letter-spacing:.02em}
+.price small{font:600 12px var(--fb);color:var(--muted);letter-spacing:0;margin-right:4px}
+.add{margin-left:auto;width:46px;height:46px;background:var(--blue);display:grid;place-items:center;font-size:26px;font-weight:600;line-height:1;color:#fff}
+.add:hover{background:#2B55F0}
+.tag{position:absolute;top:12px;left:12px;background:#fff;color:var(--bg);font:800 11px var(--fb);letter-spacing:.12em;text-transform:uppercase;padding:5px 9px}
+.item.off{opacity:.55}
+.empty-note{color:var(--muted);padding:30px 0}
+
+/* portadas de categorías */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.ctile{display:flex;align-items:center;gap:14px;padding:12px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:border-color .15s,transform .15s}
+.ctile:hover{border-color:var(--neon);transform:translateY(-2px)}
+.ctile .cimg{width:64px;height:64px;flex:none;overflow:hidden;background:#0A1030;display:grid;place-items:center}
+.ctile .cimg img{width:100%;height:100%;object-fit:cover}
+.ctile .cimg svg{width:100%;height:100%}
+.ctile b{display:block;font:800 22px/1 var(--fd);text-transform:uppercase}
+.ctile small{color:var(--muted)}
+/* fútbol */
+.fbar{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:18px;padding-bottom:2px}
+.fbar::-webkit-scrollbar{display:none}
+.fbar .chip{flex:none;white-space:nowrap}
+.mhead{display:flex;align-items:center;gap:14px;margin:36px 0 14px}
+.mhead h3{font:900 30px/1 var(--fd);text-transform:uppercase;margin:0}
+.mhead span{color:var(--muted);font-size:14px}
+.mhead .sp{flex:1}
+.mhead .arr{width:44px;height:44px}
+.mrail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*14px)/4);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.mrail::-webkit-scrollbar{display:none}
+.mrail .match{scroll-snap-align:start}
+.mrail .match .dk{color:var(--ice)}
+@media(max-width:1000px){.mrail{grid-auto-columns:calc((100% - 14px)/2.15)}}
+@media(max-width:600px){.mrail{grid-auto-columns:82%}.mhead .arr{display:none}.mhead h3{font-size:26px}}
+.daylbl{font:900 30px/1 var(--fd);text-transform:uppercase;margin:28px 0 12px;display:flex;align-items:center;gap:12px}
+.daylbl.live{color:var(--live)}
+.matches{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+@media(max-width:400px){.matches{grid-template-columns:minmax(0,1fr)}}
+.match{background:var(--card);border:1px solid var(--line);padding:16px;display:grid;gap:12px;min-width:0}
+.match.live{border-color:rgba(255,77,109,.6);box-shadow:0 0 0 1px rgba(255,77,109,.25),0 0 40px -16px var(--live)}
+.match .mt{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.match .mt .st{margin-left:auto;color:#fff}
+.match .mt .st.lv{color:var(--live);display:flex;align-items:center;gap:6px}
+.match .mt .st.lv::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--live);animation:pulse 1.2s infinite}
+.teams{display:grid;gap:8px}
+.tm{display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;gap:10px}
+.tm img{width:30px;height:30px;object-fit:contain}
+.tm .ph0{width:30px;height:30px;border-radius:50%;background:var(--bg2)}
+.tm b{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tm .sc{font:900 28px/1 var(--fd);min-width:24px;text-align:right}
+.match .mf{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.match .mf button{margin-left:auto;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--neon)}
+.fnote{color:var(--muted);font-size:13px;margin-top:22px}
+.fnote a{color:var(--ice)}
+
+/* reservas */
+.resv{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:stretch}
+@media(max-width:880px){.resv{grid-template-columns:minmax(0,1fr)}}
+.resv .pic{position:relative;min-height:380px;background:url(img/cachimba.webp) center/cover;overflow:hidden}
+.resv .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,7,26,.9),transparent 55%)}
+.resv .pic div{position:absolute;left:24px;right:24px;bottom:22px;z-index:1}
+.resv .pic b{font:900 40px/.95 var(--fd);text-transform:uppercase;display:block}
+form.f{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+form.f .full{grid-column:1/-1}
+@media(max-width:480px){form.f{grid-template-columns:minmax(0,1fr)}}
+label.l{display:grid;gap:6px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.inp{width:100%;min-height:50px;padding:12px 14px;background:var(--bg);border:1px solid var(--line);color:#fff;font-size:16px;letter-spacing:0;text-transform:none;font-weight:500;border-radius:0}
+.inp:focus{border-color:var(--neon);outline:none}
+textarea.inp{min-height:84px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ice);text-transform:none;letter-spacing:0;font-weight:500}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--blue);flex:none}
+
+/* galería */
+.gal{columns:4 240px;column-gap:14px}
+.gal figure{margin:0 0 14px;break-inside:avoid;position:relative;overflow:hidden}
+.gal img{width:100%;transition:transform .5s}
+.gal figure:hover img{transform:scale(1.04)}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 12px;background:linear-gradient(0deg,rgba(4,7,26,.9),transparent);font:800 20px/1 var(--fd);text-transform:uppercase}
+.share{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:24px}
+.share .tagline{font:900 34px/1 var(--fd);text-transform:uppercase}
+.share .tagline em{font-style:normal;color:var(--neon)}
+
+/* visítanos */
+.visit{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+@media(max-width:880px){.visit{grid-template-columns:minmax(0,1fr)}}
+.visit .ph{aspect-ratio:16/9;background:url(img/fachada.webp) center/cover;border:1px solid var(--line)}
+.info{display:grid;gap:18px}
+.info .row{display:flex;gap:14px;align-items:flex-start}
+.info .ic{width:44px;height:44px;flex:none;display:grid;place-items:center;background:var(--blue)}
+.info b{display:block;font:800 22px/1.1 var(--fd);text-transform:uppercase;letter-spacing:.02em}
+.info span,.info a{color:var(--ice)}
+.svc{display:flex;flex-wrap:wrap;gap:8px}
+
+footer{border-top:1px solid var(--line);padding-block:40px calc(40px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:14px}
+footer .wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+footer .sp{flex:1}
+footer a{color:var(--ice)}
+
+/* carrito flotante */
+.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:center;gap:14px;padding:14px 22px;background:var(--blue);color:#fff;box-shadow:0 14px 40px -6px rgba(35,71,214,.95),0 0 0 1px rgba(255,255,255,.15);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:14px;max-width:calc(100% - 32px);white-space:nowrap}
+.fab .n{background:#fff;color:var(--blue);min-width:26px;height:26px;border-radius:13px;display:grid;place-items:center;font-size:13px}
+.fab b{font:900 22px/1 var(--fd);letter-spacing:.02em}
+
+/* modales y panel lateral */
+.scrim{position:fixed;inset:0;z-index:70;background:rgba(2,4,14,.72);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:560px;max-height:92vh;overflow:auto;background:var(--bg2);border:1px solid var(--line);padding:24px var(--gxr) calc(24px + env(safe-area-inset-bottom,0px)) var(--gx);animation:up .2s ease-out}
+@media(min-width:640px){.scrim{align-items:center}.sheet{padding:28px}}
+.side .sheet{max-width:460px;height:100%;max-height:none;margin-left:auto}
+@media(min-width:640px){.scrim.side{align-items:stretch;justify-content:flex-end}}
+@keyframes up{from{transform:translateY(24px);opacity:.3}to{transform:none;opacity:1}}
+.mh{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
+.mh h3{font:900 36px/.95 var(--fd);text-transform:uppercase;margin:0}
+.mh p{margin:6px 0 0;color:var(--muted);font-size:14px}
+.mh .x{margin-left:auto;width:42px;height:42px;border:1px solid var(--line);font-size:20px;flex:none}
+.og{margin-bottom:18px}
+.og h5{display:flex;align-items:center;gap:10px;margin:0 0 10px;font:800 13px var(--fb);letter-spacing:.14em;text-transform:uppercase}
+.req{font-size:10px;padding:3px 8px;background:var(--live);color:#fff;letter-spacing:.1em}
+.req.ok{background:var(--ok);color:#04140D}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{padding:10px 14px;border:1px solid var(--line);background:var(--card);font-weight:700;font-size:14px}
+.opt.on{background:var(--blue);border-color:var(--blue)}
+.mfoot{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.mfoot .btn{flex:1;letter-spacing:.06em;padding:0 14px;white-space:nowrap}
+.cl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.qty{display:flex;align-items:center;border:1px solid var(--line)}
+.qty button{width:36px;height:36px;font-size:18px;font-weight:700;color:var(--neon)}
+.qty span{min-width:22px;text-align:center;font-weight:800}
+.cl b{display:block;font-weight:700;overflow-wrap:anywhere}
+.cl small{color:var(--muted)}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin:18px 0}
+.tot b{font:900 40px/1 var(--fd)}
+.seg{display:flex;border:1px solid var(--line);padding:4px;gap:4px;background:var(--bg)}
+.seg button{flex:1;min-height:42px;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.seg button.on{background:var(--blue);color:#fff}
+.hist{display:grid;gap:10px}
+.hist div{border:1px solid var(--line);padding:12px;font-size:14px}
+.hist b{display:block}
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(14px + env(safe-area-inset-top,0px));z-index:90;background:#fff;color:var(--bg);font-weight:700;padding:12px 18px;max-width:calc(100% - 32px);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.legal{font-size:13px;color:var(--muted)}
+.legal h4{color:#fff;margin:18px 0 6px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+<link rel="canonical" href="https://bluelonguebar.com/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BarOrPub", "name": "Blue Lounge Bar", "alternateName": ["B Lounge-Bar", "Blue Lounge Bar Seseña"], "url": "https://bluelonguebar.com/", "image": "https://bluelonguebar.com/img/og.jpg", "logo": "https://bluelonguebar.com/img/logo-512.png", "telephone": "+34614261784", "address": {"@type": "PostalAddress", "streetAddress": "Calle Van Gogh 6", "addressLocality": "Seseña", "postalCode": "45224", "addressRegion": "Toledo", "addressCountry": "ES"}, "servesCuisine": ["Colombiana", "Cócteles", "Tapas"], "menu": "https://bluelonguebar.com/carta.html", "acceptsReservations": "https://bluelonguebar.com/#reservas", "priceRange": "€€", "sameAs": ["https://www.instagram.com/bluelounge_bar/"], "amenityFeature": [{"@type": "LocationFeatureSpecification", "name": "Billar", "value": true}, {"@type": "LocationFeatureSpecification", "name": "Cachimbas", "value": true}, {"@type": "LocationFeatureSpecification", "name": "Fútbol en pantalla gigante", "value": true}]}</script>
+</head>
+<body data-page="inicio">
+
+<!-- Formularios que Netlify detecta al publicar (los envía el código de abajo) -->
+<form name="pedido" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="bot-field"><input name="mesa"><input name="nombre"><input name="telefono"><textarea name="pedido"></textarea><input name="total">
+</form>
+<form name="reserva" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="bot-field"><input name="nombre"><input name="telefono"><input name="fecha"><input name="hora"><input name="personas"><input name="zona"><textarea name="notas"></textarea>
+</form>
+
+<div class="ticker" aria-hidden="true"><div class="in" id="ticker"></div></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img src="img/logo-192.png" alt="Blue Lounge Bar"><div><b>Blue Lounge Bar</b><small>Seseña · Cócteles · Fútbol</small></div></a>
+    <nav class="menu" aria-label="Secciones">
+      <a href="#inicio">Inicio</a><a href="carta.html">Carta</a><a href="#futbol">Fútbol</a><a href="#reservas">Reservas</a><a href="#galeria">Ambiente</a><a href="#visitanos">Contacto</a>
+    </nav>
+    <div class="hbtns">
+      <button class="who" id="whoBtn" data-act="account"><i id="whoIni"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></i><span id="whoName">Entrar</span></button>
+      <a class="btn solid sm" href="#reservas">Reservar</a>
+    </div>
+    <button class="burger" data-act="nav" aria-label="Abrir menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+<div class="mesa-band" id="mesaBand" hidden><div class="wrap"><b id="mesaName">Mesa</b><span>Pide desde aquí y te lo llevamos. Pagas al final.</span><a href="carta.html">Ver la carta →</a></div></div>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="ph" role="img" aria-label="Granizado Maracumango con la B de Blue Lounge Bar"></div>
+  <div class="wrap">
+    <h1>La noche<br><em>Blue</em><br>empieza aquí</h1>
+    <p>Cócteles de autor, cachimbas premium, billar y todo el fútbol en pantalla gigante. Pide desde tu mesa con el QR o reserva en un minuto.</p>
+    <div class="ctas"><a class="btn line" href="carta.html">Ver la carta</a><a class="btn solid" href="#reservas">Reservar mesa</a></div>
+    <div class="badges" id="heroBadges"><span class="chipx">C. Van Gogh 6 · Seseña</span><span class="chipx">Cócteles · Cachimbas · Billar</span></div>
+  </div>
+</section>
+
+<section class="s" id="futbol">
+  <div class="wrap">
+    <div class="shead"><div><h2>Fútbol en <em>directo</em></h2><p>Resultados de ayer y de hoy, con el marcador en vivo. Se actualiza solo.</p></div></div>
+    <div class="fbar chips" id="lgs"></div>
+    <div id="matches"><p class="empty-note">Cargando partidos…</p></div>
+    <div id="moreM" hidden>
+      <div class="mhead"><h3>Más partidos</h3><span id="moreN"></span><div class="sp"></div>
+        <button class="arr" data-act="rail" data-t="#mrail" data-d="-1" aria-label="Anteriores"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button><button class="arr f" data-act="rail" data-t="#mrail" data-d="1" aria-label="Siguientes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></button></div>
+      <div class="mrail" id="mrail"></div>
+    </div>
+    <p class="fnote">Horarios en hora de España. Datos de partidos automáticos; para la cobertura completa consulta <a href="https://www.marca.com/resultados.html" target="_blank" rel="noopener">resultados en Marca</a>.</p>
+  </div>
+</section>
+
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="shead">
+      <div><h2>Lo que nos hace <em>únicos</em></h2><p>Un lounge con alma colombiana en Seseña: buena música, buen ambiente y algo para cada plan.</p></div>
+      <div class="sp"></div>
+      <div class="arrows"><a class="lnk" href="carta.html">Ver la carta</a><button class="arr" data-act="rail" data-d="-1" aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button><button class="arr f" data-act="rail" data-d="1" aria-label="Siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></button></div>
+    </div>
+    <div class="rail" id="rail">
+      <a class="feat" href="carta.html#cocteles"><div class="im"><img src="img/mojito-fresa.webp" alt="Mojito de fresa" loading="lazy"></div><h3>Cócteles de autor</h3><p>Mojitos, caipiriñas, Long Island y nuestros especiales. Más de 20 cócteles hechos al momento.</p><span class="more">Ver cócteles</span></a>
+      <a class="feat" href="carta.html#cachimbas"><div class="im"><img src="img/cachimba.webp" alt="Cachimba en el reservado" loading="lazy"></div><h3>Cachimbas premium</h3><p>Siete sabores, mezcla a tu gusto y un rincón lounge para disfrutarla sin prisa.</p><span class="more">Ver sabores</span></a>
+      <a class="feat" href="#futbol"><div class="im"><img src="img/fachada.webp" alt="Fachada de Blue Lounge Bar con el fútbol en las pantallas" loading="lazy"></div><h3>Fútbol en directo</h3><p>LaLiga, Champions, Premier y la liga colombiana en varias pantallas. Mira qué partidos ponemos.</p><span class="more">Ver partidos</span></a>
+      <a class="feat" href="#reservas"><div class="im"><img src="img/ambiente.webp" alt="Mesa de billar y ambiente del bar" loading="lazy"></div><h3>Billar y bolirana</h3><p>Reta a tus amigos. El billar se cobra por tiempo jugado, al segundo.</p><span class="more">Reservar</span></a>
+      <a class="feat" href="carta.html#raciones"><div class="im"><img src="img/chuleta.webp" alt="Chuleta valluna con arroz y patatas" loading="lazy"></div><h3>Sabor colombiano</h3><p>Chuleta valluna, chuzo de chorizo, tequeños, salchipapa y nuestro hotdog especial.</p><span class="more">Ver raciones</span></a>
+      <a class="feat" href="carta.html#granizados"><div class="im"><img src="img/maracumango.webp" alt="Granizado Maracumango" loading="lazy"></div><h3>Maracumango</h3><p>El granizado de la casa: mango, tajín, limón y lecherita. Con o sin alcohol.</p><span class="more">Pedirlo</span></a>
+      <a class="feat" href="carta.html#ginebras"><div class="im"><img src="img/nordes.webp" alt="Gin tonic de Nordés" loading="lazy"></div><h3>Gin tonics</h3><p>Catorce ginebras, de Beefeater a Monkey 47, servidas en copa balón.</p><span class="more">Ver ginebras</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="carta">
+  <div class="wrap">
+    <div class="shead"><div><h2>Nuestra <em>carta</em></h2><p>Raciones colombianas, cócteles, copas y cachimbas. Ábrela, elige y pide desde tu mesa.</p></div><div class="sp"></div><a class="btn solid" href="carta.html">Abrir la carta</a></div>
+    <div class="tiles" id="catTiles"></div>
+  </div>
+</section>
+
+
+
+<section class="s alt" id="reservas">
+  <div class="wrap">
+    <div class="shead"><div><h2>Reserva tu <em>mesa</em></h2><p>Para el partido, el cumpleaños o la noche de cachimba. Te confirmamos por WhatsApp.</p></div></div>
+    <div class="resv">
+      <div class="pic"><div><b>Tu sitio te espera</b><span class="chipx" style="margin-top:12px">Sala · Barra · Billar · Rincón cachimbas</span></div></div>
+      <form class="f" id="resForm" novalidate>
+        <label class="l">Nombre<input class="inp" id="r-name" autocomplete="name" required></label>
+        <label class="l">Teléfono<input class="inp" id="r-phone" type="tel" inputmode="tel" autocomplete="tel" required></label>
+        <label class="l">Día<input class="inp" id="r-date" type="date" required></label>
+        <label class="l">Hora<input class="inp" id="r-time" type="time" required></label>
+        <label class="l">Personas<select class="inp" id="r-pax"></select></label>
+        <label class="l">Zona<select class="inp" id="r-zone"><option>Sala</option><option>Barra</option><option>Mesa de billar</option><option>Rincón cachimbas</option><option>Me da igual</option></select></label>
+        <label class="l full">Ocasión o comentario<textarea class="inp" id="r-notes" placeholder="Ej.: cumpleaños, vemos el Madrid–Barça, cachimba de menta…"></textarea></label>
+        <label class="check full"><input type="checkbox" id="r-ok" required><span>Acepto que Blue Lounge Bar use mis datos solo para gestionar la reserva. <button type="button" data-act="legal" style="text-decoration:underline">Privacidad</button></span></label>
+        <div class="full"><button class="btn solid" type="submit" style="width:100%">Enviar reserva</button></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="galeria">
+  <div class="wrap">
+    <div class="shead"><div><h2>El <em>ambiente</em></h2><p>Así se vive una noche en Blue. Haz tu foto y etiquétanos.</p></div></div>
+    <div class="gal">
+      <figure><img src="img/maracumango.webp" alt="Granizado Maracumango con la B del bar" loading="lazy"><figcaption>Maracumango</figcaption></figure>
+      <figure><img src="img/ambiente.webp" alt="Clientes jugando al billar" loading="lazy"><figcaption>Billar</figcaption></figure>
+      <figure><img src="img/nordes.webp" alt="Gin tonic de Nordés" loading="lazy"><figcaption>Gin tonic</figcaption></figure>
+      <figure><img src="img/cachimba-2.webp" alt="Cachimba con luz morada" loading="lazy"><figcaption>Cachimbas</figcaption></figure>
+      <figure><img src="img/hotdog.webp" alt="Hotdog especial con patatilla y piña" loading="lazy"><figcaption>Hotdog especial</figcaption></figure>
+      <figure><img src="img/licores.webp" alt="Licores Sombrero Mexicano y Plata o Plomo" loading="lazy"><figcaption>Nuevos en barra</figcaption></figure>
+      <figure><img src="img/mojito-brugal-2.webp" alt="Mojito con Brugal Añejo" loading="lazy"><figcaption>Mojito Brugal</figcaption></figure>
+      <figure><img src="img/chorizo.webp" alt="Chorizo a la brasa con arepa y limón" loading="lazy"><figcaption>Chuzo de chorizo</figcaption></figure>
+      <figure><img src="img/tenders.webp" alt="Chicken tenders con salsa" loading="lazy"><figcaption>Chicken tenders</figcaption></figure>
+    </div>
+    <div class="share"><span class="tagline">Etiquétanos en <em>@bluelounge_bar</em></span><a class="btn line sm" href="https://www.instagram.com/bluelounge_bar/" target="_blank" rel="noopener">Instagram</a><button class="btn solid sm" data-act="share">Compartir Blue</button></div>
+  </div>
+</section>
+
+<section class="s alt" id="visitanos">
+  <div class="wrap">
+    <div class="shead"><div><h2>Ven a <em>vernos</em></h2></div></div>
+    <div class="visit">
+      <div class="ph" role="img" aria-label="Fachada iluminada de Blue Lounge Bar"></div>
+      <div class="info">
+        <div class="row"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><b>C. Van Gogh, 6</b><span>45224 Seseña, Toledo</span><br><a href="https://www.google.com/maps/search/?api=1&query=Blue+Lounge+Bar+Calle+Van+Gogh+6+Sese%C3%B1a" target="_blank" rel="noopener">Cómo llegar →</a></div></div>
+        <div class="row"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><div><b>614 26 17 84</b><a href="tel:+34614261784">Llamar</a> · <a href="https://wa.me/34614261784" target="_blank" rel="noopener">WhatsApp</a></div></div>
+        <div class="row"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg></span><div><b>@bluelounge_bar</b><a href="https://www.instagram.com/bluelounge_bar/" target="_blank" rel="noopener">Síguenos en Instagram</a></div></div>
+        <div class="svc"><span class="chipx">Cócteles</span><span class="chipx">Cervezas</span><span class="chipx">Copas</span><span class="chipx">Cachimbas</span><span class="chipx">Billar y bolirana</span><span class="chipx">Fútbol</span><span class="chipx">Música</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="img/logo-64.png" alt="" width="40" height="40" style="border-radius:50%">
+    <div>© <span id="yr">2026</span> Blue Lounge Bar · C. Van Gogh 6, Seseña<br><small>Consumo responsable. No servimos alcohol a menores de 18 años.</small></div>
+    <div class="sp"></div>
+    <button data-act="legal" style="text-decoration:underline">Privacidad</button>
+    <a href="https://www.instagram.com/bluelounge_bar/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</footer>
+
+<button class="fab" id="fab" data-act="cart" hidden><span class="n" id="fabN">0</span><span>Tu pedido</span><b id="fabT">0 €</b></button>
+<div class="scrim" id="modal" hidden><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="app.js?v=2"></script>
+</body>
+</html>
