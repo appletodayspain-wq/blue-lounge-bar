@@ -1,0 +1,9 @@
+{
+  "name": "blue-lounge-bar",
+  "private": true,
+  "type": "module",
+  "description": "Web, carta con pedidos, reservas y TPV de Blue Lounge Bar (Seseña)",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.9"
+  }
+}

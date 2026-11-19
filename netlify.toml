@@ -1,0 +1,7 @@
+[build]
+  publish = "site"
+  command = "echo 'Sin compilación: la web es estática'"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

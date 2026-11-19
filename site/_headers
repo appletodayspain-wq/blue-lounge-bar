@@ -1,0 +1,7 @@
+/img/*
+  Cache-Control: public, max-age=604800
+/tpv.html
+  X-Robots-Tag: noindex
+  Cache-Control: no-cache
+/app.js
+  Cache-Control: no-cache
