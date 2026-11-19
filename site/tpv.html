@@ -353,6 +353,7 @@ td .pimg{width:36px;border-radius:9px}
 .seg.req{border-color:var(--bill);box-shadow:0 0 0 3px rgba(240,86,106,.25);animation:shake .35s}
 @keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 .reqmsg{color:var(--bill);font-weight:700;font-size:14px;margin:8px 0 0}
+.qsale{font-size:15px}
 /* Web: avisos, agenda y acceso */
 .alerts{display:grid;gap:8px;margin-bottom:16px}
 .alert{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--panel);text-align:left;width:100%}
@@ -650,7 +651,7 @@ VIEWS.sala=()=>{
   const shown=ts.filter(t=>ui.zone==='Todas'||(t.zone||'Sala')===ui.zone);
   const open=ts.filter(t=>tStatus(t)!=='free');
   const today=salesFrom(dayStart()).reduce((s,x)=>s+x.total,0);
-  return `<div class="vhead"><div><h1 class="view">Sala</h1><div class="sub">${new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'})} · atiende ${esc(meName())}</div></div></div>
+  return `<div class="vhead"><div><h1 class="view">Sala</h1><div class="sub">${new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'})} · atiende ${esc(meName())}</div></div><div class="sp"></div><button class="btn pri qsale" data-act="quick-sale">⚡ Venta rápida</button></div>
   <div class="kpis">
     <div class="kpi"><div class="l">Libres</div><div class="v num">${ts.length-open.length}</div></div>
     <div class="kpi"><div class="l">Ocupadas</div><div class="v num">${open.length}</div></div>
@@ -1185,7 +1186,7 @@ setInterval(watch,1500);
 
 /* ---------- modal y avisos ---------- */
 function openModal(html){$('#mbox').innerHTML=html;$('#modal').hidden=false}
-function closeModal(){$('#modal').hidden=true;$('#mbox').innerHTML='';pay=null;pin=null;opt=null}
+function closeModal(){$('#modal').hidden=true;$('#mbox').innerHTML='';pay=null;pin=null;opt=null;se=null}
 $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
 let tt;function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2600)}
 const mh=(t,sub)=>`<div class="mh"><div><h3>${t}</h3>${sub?`<div class="muted" style="font-size:13px">${sub}</div>`:''}</div><button class="x" data-act="close" aria-label="Cerrar">✕</button></div>`;
@@ -1201,7 +1202,12 @@ A.kds=el=>{ui.kds=el.dataset.s;render()};
 A.period=el=>{ui.period=el.dataset.p;render()};
 A.stockcat=el=>{ui.stockCat=el.dataset.c;render()};
 A.sheet=()=>{ui.sheet=!ui.sheet;render()};
-A.back=()=>{ui.view='sala';ui.sheet=false;render()};
+A.back=()=>{const t=S.tables[ui.table];if(t&&t.quick&&!(t.items||[]).length&&!hasTimer(t))del('tables',t.id);ui.view='sala';ui.sheet=false;render()};
+/* Venta rápida: venta de mostrador sin mesa; desaparece al cobrarla o si se sale sin añadir nada */
+A['quick-sale']=()=>{const d0=dayStart();
+  const n=list('sales').filter(x=>x.at>=d0&&/^Venta \d+/.test(x.table||'')).length+tables().filter(t=>t.quick).length+1;
+  const id='v'+uid();put('tables',id,{name:'Venta '+n,zone:'Mostrador',order:300,seats:0,temp:true,quick:true,items:[],guests:0,openedAt:now(),waiter:meName()});
+  ui.q='';ui.table=id;ui.view='comanda';ui.sheet=false;ui.cat=null;render();$('#main').scrollTop=0;toast('Venta rápida: añade productos y cobra')};
 A['open-table']=el=>{const ot=S.tables[el.dataset.id];if(ot&&ot.call){put('tables',ot.id,Object.assign({},ot,{call:null}));toast('Aviso de la mesa '+ot.name+' atendido')}ui.q='';ui.table=el.dataset.id;ui.view='comanda';ui.sheet=false;ui.cat=null;render();$('#main').scrollTop=0};
 
 function saveTable(t){put('tables',t.id,t);render()}
@@ -1378,12 +1384,13 @@ function receipt(s){
    <div class="rr big"><span>TOTAL</span><span>${eur(s.total)}</span></div>
    ${s.tip?`<div class="rr"><span>Propina</span><span>${eur(s.tip)}</span></div>`:''}
    <div class="rr"><span>Pago</span><span>${esc(s.method)}${s.method==='efectivo'&&s.given?' '+eur(s.given)+' · cambio '+eur(s.change):''}</span></div><hr>
+   ${s.edited?`<div class="c" style="font-size:11px">Modificado ${dmy(s.editedAt)} ${hhmm(s.editedAt)}${s.editedBy?' por '+esc(s.editedBy):''}</div>`:''}
    ${s.void?'<div class="c big">*** TICKET ANULADO ***</div>':'<div class="c">¡Gracias por su visita!</div>'}</div>`;
 }
 function showTicket(id){
   const s=S.sales[id];if(!s)return;
   openModal(mh('Ticket '+esc(s.no),s.void?'Anulado':'Cobrado '+hhmm(s.at))+receipt(s)+
-   `<div class="mf">${s.void?'':`<button class="btn danger" data-act="void" data-id="${id}">Anular ticket</button>`}<button class="btn" data-act="print-ticket" data-id="${id}">🖨️ Imprimir</button><button class="btn pri" data-act="close">Hecho</button></div>`);
+   `<div class="mf">${s.void?'':`<button class="btn" data-act="sale-edit" data-id="${id}">✏️ Editar</button><button class="btn warn" data-act="void" data-id="${id}">Anular</button>`}<button class="btn danger" data-act="sale-del" data-id="${id}">Borrar</button><button class="btn" data-act="print-ticket" data-id="${id}">🖨️ Imprimir</button><button class="btn pri" data-act="close">Hecho</button></div>`);
 }
 /* Impresión del ticket en un marco aparte, a 80 mm (impresoras de tickets) o en A4 si es una impresora normal */
 function printTicket(id){
@@ -1406,6 +1413,29 @@ function printTicket(id){
 }
 A['print-ticket']=el=>printTicket(el.dataset.id);
 A.ticket=el=>showTicket(el.dataset.id);
+/* ---------- editar o borrar una venta ---------- */
+var se=null;
+function stockBack(items,sign){(items||[]).forEach(i=>{const p=S.products[i.pid];if(p&&typeof p.stock==='number')put('products',p.id,Object.assign({},p,{stock:p.stock+sign*i.qty}))})}
+function seCalc(){const s=S.sales[se.id];const sub=r2(se.items.reduce((q,i)=>q+i.price*i.qty,0));const discount=r2(sub*(s.discPct||0)/100);const total=r2(sub-discount);return{sub,discount,total,charge:r2(total+(s.tip||0))}}
+function renderSE(){const s=S.sales[se.id];if(!s){closeModal();return}const c=seCalc();
+  openModal(mh('Editar venta '+esc(s.no),'Mesa '+esc(s.table)+' · '+dmy(s.at)+' '+hhmm(s.at))+`
+  <div class="list">${se.items.map((i,ix)=>`<div class="li" style="grid-template-columns:auto minmax(0,1fr) auto auto"><span class="qty"><button data-act="se-qty" data-i="${ix}" data-d="-1">−</button><span>${i.qty}</span><button data-act="se-qty" data-i="${ix}" data-d="1">+</button></span>
+    <span class="tx"><b>${esc(i.name)}</b><small>${eur(i.price)} c/u</small></span><span class="vv">${eur(i.price*i.qty)}</span><button class="btn sm danger" data-act="se-rm" data-i="${ix}" aria-label="Quitar">✕</button></div>`).join('')||'<p class="muted">Sin productos. Si no queda nada, mejor borra o anula la venta.</p>'}</div>
+  <h2>Forma de pago</h2><div class="seg">${['tarjeta','efectivo','bizum'].map(m=>`<button class="${se.method===m?'on':''}" data-act="se-method" data-m="${m}">${m[0].toUpperCase()+m.slice(1)}</button>`).join('')}</div>
+  <div class="payt">${s.discPct?`<div class="r"><span>Descuento ${s.discPct}%</span><span>−${eur(c.discount)}</span></div>`:''}${s.tip?`<div class="r"><span>Propina</span><span>${eur(s.tip)}</span></div>`:''}
+    <div class="tot-row"><span>Total nuevo</span><b>${eur(c.total)}</b></div><div class="r"><span>Antes</span><span>${eur(s.total)}</span></div></div>
+  <div class="mf"><button class="btn" data-act="se-cancel">Volver</button><button class="btn pri" data-act="se-save" ${se.items.length?'':'disabled'}>Guardar cambios</button></div>`)}
+A['sale-edit']=el=>{const s=S.sales[el.dataset.id];if(!s)return;se={id:s.id,items:s.items.map(i=>Object.assign({},i)),method:s.method};renderSE()};
+A['se-qty']=el=>{const i=se.items[+el.dataset.i];i.qty=Math.max(1,i.qty+(+el.dataset.d));renderSE()};
+A['se-rm']=el=>{se.items.splice(+el.dataset.i,1);renderSE()};
+A['se-method']=el=>{se.method=el.dataset.m;renderSE()};
+A['se-cancel']=()=>{const id=se.id;se=null;showTicket(id)};
+A['se-save']=()=>{const s=S.sales[se.id];if(!s||!se.items.length)return;const c=seCalc();
+  stockBack(s.items,1);stockBack(se.items,-1);
+  const keepCash=se.method==='efectivo'&&s.method==='efectivo'&&s.given&&s.given>=c.charge;
+  put('sales',s.id,Object.assign({},s,{items:se.items,subtotal:c.sub,discount:c.discount,total:c.total,method:se.method,given:se.method==='efectivo'?(keepCash?s.given:c.charge):null,change:se.method==='efectivo'?(keepCash?r2(s.given-c.charge):0):null,edited:true,editedAt:now(),editedBy:meName(),before:s.before||{total:s.total,method:s.method,items:s.items}}));
+  const id=se.id;se=null;toast('Venta modificada');showTicket(id);render()};
+A['sale-del']=el=>arm(el,()=>{const s=S.sales[el.dataset.id];if(!s)return;if(!s.void)stockBack(s.items,1);del('sales',s.id);closeModal();render();toast('Venta '+s.no+' borrada')});
 A.void=el=>arm(el,()=>{const s=S.sales[el.dataset.id];if(!s)return;put('sales',s.id,Object.assign({},s,{void:true,voidAt:now(),voidBy:meName()}));
   s.items.forEach(i=>{const p=S.products[i.pid];if(p&&typeof p.stock==='number')put('products',p.id,Object.assign({},p,{stock:p.stock+i.qty}))});closeModal();render();toast('Ticket anulado y stock devuelto')});
 
@@ -1483,7 +1513,7 @@ A.po=()=>{
 A['copy-po']=()=>{const ta=$('#po-txt');const done=()=>toast('Pedido copiado');try{navigator.clipboard.writeText(ta.value).then(done,()=>{ta.select();toast('Selecciona y copia el texto')})}catch(e){ta.select();toast('Selecciona y copia el texto')}};
 
 /* ---------- roles y permisos ---------- */
-const PERMS=[['cobrar','Cobrar mesas y pedidos'],['descuentos','Descuentos e invitaciones al cobrar'],['anular','Anular tickets, quitar productos ya enviados y descartar tiempo de billar'],['caja','Ver la caja, informes y hacer el cierre'],['stock','Cambiar carta, precios, stock y happy hour'],['reservas','Gestionar reservas'],['clientes','Ver y editar clientes'],['personal','Gestionar personal, roles y permisos'],['ajustes','Ajustes, mesas, códigos QR y clave del TPV']];
+const PERMS=[['cobrar','Cobrar mesas y pedidos'],['descuentos','Descuentos e invitaciones al cobrar'],['anular','Anular, editar y borrar ventas; quitar productos ya enviados; descartar tiempo de billar'],['caja','Ver la caja, informes y hacer el cierre'],['stock','Cambiar carta, precios, stock y happy hour'],['reservas','Gestionar reservas'],['clientes','Ver y editar clientes'],['personal','Gestionar personal, roles y permisos'],['ajustes','Ajustes, mesas, códigos QR y clave del TPV']];
 const ROLES={admin:{n:'Administrador',d:'Puede hacerlo todo',p:PERMS.map(x=>x[0])},mesero:{n:'Mesero',d:'Toma nota, cobra y gestiona reservas',p:['cobrar','reservas','clientes']},cocina:{n:'Cocina',d:'Solo ve la pantalla de cocina',p:[]}};
 const rolOf=p=>(p&&ROLES[p.rol])?p.rol:'admin';
 const permsOf=p=>p?(Array.isArray(p.perms)?p.perms:ROLES[rolOf(p)].p):[];
@@ -1493,7 +1523,7 @@ const VIEW_PERM={agenda:'reservas',caja:'caja',stock:'stock',personal:'personal'
 function canView(v){if(!protectedMode())return true;const p=S.staff[me];
   if(p&&rolOf(p)==='cocina')return v==='cocina'||v==='mas'||(VIEW_PERM[v]&&can(VIEW_PERM[v]));
   return !VIEW_PERM[v]||can(VIEW_PERM[v])}
-const ACT_PERM={'pay':'cobrar','pay-confirm':'cobrar','pay-disc':'descuentos','void':'anular','billar-reset':'anular','cierre':'caja','save-cierre':'caja',
+const ACT_PERM={'sale-edit':'anular','sale-del':'anular','pay':'cobrar','pay-confirm':'cobrar','pay-disc':'descuentos','void':'anular','billar-reset':'anular','cierre':'caja','save-cierre':'caja',
   'prod-new':'stock','prod-edit':'stock','prod-save':'stock','prod-del':'stock','stk':'stock','soldout':'stock','happy':'stock','happy-edit':'stock','happy-save':'stock','photo-del':'stock',
   'staff-new':'personal','staff-edit':'personal','staff-save':'personal','staff-del':'personal','cust-new':'clientes','cust-edit':'clientes','cust-save':'clientes','cust-del':'clientes',
   'res-st':'reservas','res-del':'reservas','res-new':'reservas','res-save':'reservas','table-new':'ajustes','table-edit':'ajustes','table-save':'ajustes','table-del':'ajustes','cfg-save':'ajustes','net-clave':'ajustes'};
