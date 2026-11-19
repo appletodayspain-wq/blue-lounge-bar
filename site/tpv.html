@@ -350,6 +350,9 @@ td .pimg{width:36px;border-radius:9px}
 .tbl .tbh{justify-content:space-between;flex-wrap:wrap;gap:4px 8px;align-items:center}
 .tbl .nm{white-space:nowrap}.tbl .pill{white-space:nowrap}
 .perml{display:grid;gap:2px}.perml .sel-line{font-size:14px}
+.seg.req{border-color:var(--bill);box-shadow:0 0 0 3px rgba(240,86,106,.25);animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.reqmsg{color:var(--bill);font-weight:700;font-size:14px;margin:8px 0 0}
 /* Web: avisos, agenda y acceso */
 .alerts{display:grid;gap:8px;margin-bottom:16px}
 .alert{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--panel);text-align:left;width:100%}
@@ -1287,7 +1290,7 @@ A['billar-start']=()=>{const t=Object.assign({},S.tables[ui.table]);if(t.timerSt
 A['billar-pause']=()=>{const t=Object.assign({},S.tables[ui.table]);t.timerAcc=tSecs(t);t.timerStart=null;saveTable(t);toast('Partida en pausa')};
 A['billar-stop']=()=>{const t=stopTimer(S.tables[ui.table]);saveTable(t);toast('Tiempo de billar añadido a la cuenta')};
 A['billar-reset']=el=>arm(el,()=>{const t=Object.assign({},S.tables[ui.table]);t.timerStart=null;t.timerAcc=0;t.alarmSecs=null;t.alarmMin=null;if(!(t.items||[]).length){t.bill=false;t.openedAt=null;t.guests=0;t.waiter=null}saveTable(t)});
-A.pay=()=>{if(hasTimer(S.tables[ui.table])){put('tables',ui.table,stopTimer(S.tables[ui.table]))}pay={tid:ui.table,mode:'all',sel:[],disc:0,tipPct:0,tipAmt:null,method:'tarjeta',given:'',split:2,cust:(S.tables[ui.table]&&S.tables[ui.table].customerId)||''};ui.sheet=false;renderPay()};
+A.pay=()=>{if(hasTimer(S.tables[ui.table])){put('tables',ui.table,stopTimer(S.tables[ui.table]))}pay={tid:ui.table,mode:'all',sel:[],disc:0,tipPct:0,tipAmt:null,method:null,needMethod:false,print:lsGet('blounge-print',true),given:'',split:2,cust:(S.tables[ui.table]&&S.tables[ui.table].customerId)||''};ui.sheet=false;renderPay()};
 function renderPay(){
   const t=S.tables[pay.tid];if(!t){closeModal();return}
   const c=payCalc();const items=t.items||[];const custs=list('customers').sort((a,b)=>a.name.localeCompare(b.name,'es'));
@@ -1306,23 +1309,27 @@ function renderPay(){
     <label class="f">Descuento<div class="chips">${[0,5,10,15,20].map(d=>`<button class="chip ${pay.disc===d?'on':''}" data-act="pay-disc" data-v="${d}">${d?d+'%':'No'}</button>`).join('')}</div></label>
     <label class="f">Propina<div class="chips">${[0,5,10].map(d=>`<button class="chip ${pay.tipAmt==null&&pay.tipPct===d?'on':''}" data-act="pay-tip" data-v="${d}">${d?d+'%':'No'}</button>`).join('')}<button class="chip ${pay.tipAmt!=null?'on':''}" data-act="pay-tip" data-v="round">Redondear</button></div></label>
   </div>
-  <h2>Forma de pago</h2>
-  <div class="seg"><button class="${pay.method==='tarjeta'?'on':''}" data-act="pay-method" data-m="tarjeta">Tarjeta</button><button class="${pay.method==='efectivo'?'on':''}" data-act="pay-method" data-m="efectivo">Efectivo</button><button class="${pay.method==='bizum'?'on':''}" data-act="pay-method" data-m="bizum">Bizum</button></div>
+  <h2>Forma de pago <span style="color:var(--bill)">*</span></h2>
+  <div class="seg ${pay.needMethod&&!pay.method?'req':''}"><button class="${pay.method==='tarjeta'?'on':''}" data-act="pay-method" data-m="tarjeta">Tarjeta</button><button class="${pay.method==='efectivo'?'on':''}" data-act="pay-method" data-m="efectivo">Efectivo</button><button class="${pay.method==='bizum'?'on':''}" data-act="pay-method" data-m="bizum">Bizum</button></div>
   ${pay.method==='efectivo'?`<div class="fgrid" style="margin-top:12px"><label class="f">Entregado (€)<input class="inp num" id="pay-given" inputmode="decimal" value="${esc(pay.given)}" placeholder="${c.charge}"></label>
     <div class="f" style="align-content:end"><span>Cambio</span><b id="pay-change" class="num" style="font-size:24px;color:var(--free)">${eur(Math.max(0,given-c.charge))}</b></div>
     <div class="chips full">${[5,10,20,50].filter(v=>v>=c.charge||v===50).map(v=>`<button class="chip" data-act="pay-given" data-v="${v}">${v} €</button>`).join('')}<button class="chip" data-act="pay-given" data-v="${c.charge}">Exacto</button></div></div>`:''}
   <h2>Cliente (puntos de fidelidad)</h2>
   <select class="inp" id="pay-cust"><option value="">Sin cliente</option>${custs.map(x=>`<option value="${x.id}" ${pay.cust===x.id?'selected':''}>${esc(x.name)} · ${x.points||0} pts</option>`).join('')}</select>
-  <div class="mf"><button class="btn" data-act="close">Cancelar</button><button class="btn ok" data-act="pay-confirm" ${payLines().length?'':'disabled'}>Cobrar ${eur(c.charge)}</button></div>`);
+  ${pay.needMethod&&!pay.method?'<p class="reqmsg">Elige cómo paga el cliente: tarjeta, efectivo o Bizum.</p>':''}
+  <button class="sel-line ${pay.print?'on':''}" data-act="pay-print" style="margin-top:14px"><span class="ck"></span><span class="sp">Imprimir el ticket al cobrar</span><span class="muted" style="font-size:12px">🖨️</span></button>
+  <div class="mf"><button class="btn" data-act="close">Cancelar</button><button class="btn ok" data-act="pay-confirm" ${payLines().length?'':'disabled'}>${pay.method?'Cobrar '+eur(c.charge):'Elige forma de pago'}</button></div>`);
 }
 A['pay-mode']=el=>{pay.mode=el.dataset.m;renderPay()};
 A['pay-line']=el=>{const k=el.dataset.k;pay.sel=pay.sel.includes(k)?pay.sel.filter(x=>x!==k):[...pay.sel,k];renderPay()};
 A['pay-split']=el=>{pay.split=Math.max(2,pay.split+(+el.dataset.d));renderPay()};
 A['pay-disc']=el=>{pay.disc=+el.dataset.v;renderPay()};
 A['pay-tip']=el=>{if(el.dataset.v==='round'){pay.tipAmt=null;pay.tipPct=0;const c=payCalc();pay.tipAmt=r2(Math.ceil(c.total)-c.total||1)}else{pay.tipAmt=null;pay.tipPct=+el.dataset.v}renderPay()};
-A['pay-method']=el=>{pay.method=el.dataset.m;renderPay()};
+A['pay-method']=el=>{pay.method=el.dataset.m;pay.needMethod=false;renderPay()};
+A['pay-print']=()=>{pay.print=!pay.print;lsSet('blounge-print',pay.print);renderPay()};
 A['pay-given']=el=>{pay.given=String(el.dataset.v);renderPay()};
 A['pay-confirm']=()=>{
+  if(!pay.method){pay.needMethod=true;renderPay();toast('Elige la forma de pago antes de cobrar');return}
   const t=Object.assign({},S.tables[pay.tid]);const lines=payLines();if(!lines.length)return;
   const c=payCalc();const given=parseFloat(String(pay.given).replace(',','.'))||0;
   if(pay.method==='efectivo'&&pay.given&&given<c.charge){toast('Falta dinero: entregado '+eur(given)+' de '+eur(c.charge));return}
@@ -1337,7 +1344,7 @@ A['pay-confirm']=()=>{
   if(!t.items.length&&!hasTimer(t)){t.bill=false;t.openedAt=null;t.guests=0;t.waiter=null;t.customerId=null;t.call=null;t.sess=null;t.webCust=null;t.ready=null;t.webNew=null}
   if(t.temp&&!t.items.length)del('tables',t.id);else put('tables',t.id,t);
   const left=t.items.length;
-  pay=null;showTicket(sid);
+  const doPrint=pay.print;pay=null;showTicket(sid);if(doPrint)setTimeout(()=>printTicket(sid),250);
   if(!left){ui.view='sala';ui.sheet=false}
   render();
 };
@@ -1376,8 +1383,28 @@ function receipt(s){
 function showTicket(id){
   const s=S.sales[id];if(!s)return;
   openModal(mh('Ticket '+esc(s.no),s.void?'Anulado':'Cobrado '+hhmm(s.at))+receipt(s)+
-   `<div class="mf">${s.void?'':`<button class="btn danger" data-act="void" data-id="${id}">Anular ticket</button>`}<button class="btn pri" data-act="close">Hecho</button></div>`);
+   `<div class="mf">${s.void?'':`<button class="btn danger" data-act="void" data-id="${id}">Anular ticket</button>`}<button class="btn" data-act="print-ticket" data-id="${id}">🖨️ Imprimir</button><button class="btn pri" data-act="close">Hecho</button></div>`);
 }
+/* Impresión del ticket en un marco aparte, a 80 mm (impresoras de tickets) o en A4 si es una impresora normal */
+function printTicket(id){
+  const s=S.sales[id];if(!s)return;
+  const html=receipt(s);
+  let f=document.getElementById('printFrame');if(f)f.remove();
+  f=document.createElement('iframe');f.id='printFrame';f.setAttribute('aria-hidden','true');
+  f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden';
+  document.body.appendChild(f);
+  const d=f.contentDocument;
+  d.open();d.write(`<!doctype html><html><head><meta charset="utf-8"><title>Ticket ${esc(s.no)}</title><style>
+    @page{size:80mm auto;margin:3mm}
+    *{box-sizing:border-box}body{margin:0;color:#000;background:#fff;font:12px/1.45 ui-monospace,Menlo,Consolas,'Courier New',monospace}
+    .receipt{width:72mm;margin:0 auto;padding:2mm 0}.receipt .c{text-align:center}.receipt img{width:22mm;height:22mm;display:block;margin:0 auto 2mm;filter:grayscale(1) contrast(1.4)}
+    .receipt .rn{font:700 16px Georgia,serif;text-align:center}.receipt hr{border:0;border-top:1px dashed #000;margin:2mm 0}
+    .receipt .rr{display:flex;justify-content:space-between;gap:3mm}.receipt .big{font-weight:800;font-size:15px}
+  </style></head><body>${html}</body></html>`);d.close();
+  let done=false;const go=()=>{if(done)return;done=true;try{f.contentWindow.focus();f.contentWindow.print()}catch(e){toast('No se pudo abrir la impresión')}};
+  const img=d.querySelector('img');if(img&&!img.complete){img.onload=go;img.onerror=go;setTimeout(go,1200)}else setTimeout(go,100);
+}
+A['print-ticket']=el=>printTicket(el.dataset.id);
 A.ticket=el=>showTicket(el.dataset.id);
 A.void=el=>arm(el,()=>{const s=S.sales[el.dataset.id];if(!s)return;put('sales',s.id,Object.assign({},s,{void:true,voidAt:now(),voidBy:meName()}));
   s.items.forEach(i=>{const p=S.products[i.pid];if(p&&typeof p.stock==='number')put('products',p.id,Object.assign({},p,{stock:p.stock+i.qty}))});closeModal();render();toast('Ticket anulado y stock devuelto')});
