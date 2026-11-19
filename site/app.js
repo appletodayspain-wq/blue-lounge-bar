@@ -434,7 +434,7 @@ const A={
     $('#r-notes').value=`Venimos a ver ${m.home.n} – ${m.away.n} (${m.lg})`;$('#reservas').scrollIntoView();toast('Reserva preparada para el partido')},
   rail:el=>{const r=$(el.dataset.t||'#rail');r.scrollBy({left:(+el.dataset.d)*r.clientWidth*.9,behavior:'smooth'})},
   nav:()=>{modalNav()},
-  share:async()=>{const data={title:'Blue Lounge Bar',text:'Cócteles, cachimbas, billar y fútbol en directo en Seseña 💙',url:'https://blue-lounge-bar.netlify.app/'};
+  share:async()=>{const data={title:'Blue Lounge Bar',text:'Cócteles, cachimbas, billar y fútbol en directo en Seseña 💙',url:'https://bluelonguebar.com/'};
     try{if(navigator.share){await navigator.share(data);return}}catch(e){return}
     try{await navigator.clipboard.writeText(data.url);toast('Enlace copiado. ¡Pásaselo a tu grupo!')}catch(e){toast(data.url)}},
   legal:()=>modal(`<div class="mh"><div><h3>Privacidad</h3></div><button class="x" data-act="close" aria-label="Cerrar">✕</button></div><div class="legal">

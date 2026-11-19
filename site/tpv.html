@@ -1001,7 +1001,7 @@ VIEWS.mas=()=>`<div class="vhead"><h1 class="view">Más</h1></div><div class="mo
 const QRS=[...Array.from({length:11},(_,i)=>({f:'qr-mesa-'+(i+1),n:'Mesa '+(i+1),g:'Mesas',u:'carta.html?mesa='+(i+1)})),
   ...[1,2,3].map(i=>({f:'qr-barra-'+i,n:'Barra '+i,g:'Barra',u:'carta.html?mesa=barra'+i})),
   {f:'qr-web',n:'Web del bar',g:'Web',u:''},{f:'qr-web-carta',n:'Carta para llevar',g:'Web',u:'carta.html'},{f:'qr-pedido-web',n:'Pedido web',g:'Web',u:'carta.html?pedido=web'}];
-const QRBASE='https://blue-lounge-bar.netlify.app/';
+const QRBASE='https://bluelonguebar.com/';
 let dlNS;
 async function dlns(){if(dlNS===undefined){try{dlNS=window.claude&&window.claude.use?await window.claude.use('downloads'):null}catch(e){dlNS=null}}return dlNS}
 VIEWS.qr=()=>`<div class="vhead"><div><h1 class="view">Códigos QR</h1><div class="sub">${QRS.length} carteles listos para imprimir en A5 o A6. Cada uno abre la carta con la mesa ya puesta.</div></div><div class="sp"></div>
