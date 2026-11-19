@@ -347,6 +347,8 @@ td .pimg{width:36px;border-radius:9px}
 @keyframes pb3{0%,42%{transform:translate(138px,59px)}72%{transform:translate(160px,80px)}100%{transform:translate(163px,83px)}}
 @keyframes pb4{0%,46%{transform:translate(148px,52px)}80%{transform:translate(176px,56px)}100%{transform:translate(178px,56px)}}
 .tbl.billar.open{border-color:rgba(46,196,140,.55);box-shadow:0 0 0 1px rgba(46,196,140,.2),0 10px 30px -12px rgba(46,196,140,.6)}
+.tbl .tbh{justify-content:space-between;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.tbl .nm{white-space:nowrap}.tbl .pill{white-space:nowrap}
 /* Web: avisos, agenda y acceso */
 .alerts{display:grid;gap:8px;margin-bottom:16px}
 .alert{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--panel);text-align:left;width:100%}
@@ -647,7 +649,7 @@ VIEWS.sala=()=>{
   <div class="chips" style="margin-bottom:14px">${zones.map(z=>`<button class="chip ${ui.zone===z?'on':''}" data-act="zone" data-z="${esc(z)}">${esc(z)}</button>`).join('')}</div>
   <div class="tables">${shown.map(t=>{const st=tStatus(t);const n=(t.items||[]).reduce((s,i)=>s+i.qty,0);
     return `<button class="tbl ${st} ${(t.zone||'')==='Barra'?'barra':''} ${isBillar(t)?'billar':''}" data-act="open-table" data-id="${t.id}">
-      <span class="row" style="justify-content:space-between"><span class="nm">${esc(t.name)}</span><span class="pill ${st}">${STATUS[st]}</span></span>
+      <span class="row tbh"><span class="nm">${esc(t.name)}</span><span class="pill ${st}">${STATUS[st]}</span></span>
       ${t.call||(t.items||[]).some(i=>i.by==='cliente'&&!i.sent)?`<span class="row" style="gap:6px;flex-wrap:wrap">${t.call?'<span class="pill callp">Llama al camarero</span>':''}${(t.items||[]).some(i=>i.by==='cliente'&&!i.sent)?'<span class="pill cliep">Pedido del cliente</span>':''}</span>`:''}
       <span class="meta">${esc(t.zone||'Sala')} · ${t.guests?t.guests+' pers.':(t.seats||0)+' plazas'}${st!=='free'?' · '+fmtMin(mins(t.openedAt)):''}</span>
       ${isBillar(t)&&t.timerStart?poolSVG(t,false):''}
