@@ -491,7 +491,7 @@ async function boot(){
 /* ---------- datos derivados ---------- */
 const list=c=>Object.values(S[c]);
 function cfg(){
-  const base={name:'B Lounge-Bar',nif:'',address:'',phone:'',iva:10,fondo:100,cats:[],happy:{on:false,pct:20,cats:[]},billar:{p30:3,p60:9}};
+  const base={name:'B Lounge-Bar',nif:'',address:'',phone:'',iva:10,fondo:100,cats:[],happy:{on:false,pct:20,cats:[]},billar:{p30:3,p60:6}};
   const m=S.settings.main||{};
   return Object.assign(base,m,{happy:Object.assign({},base.happy,m.happy||{}),billar:Object.assign({},base.billar,m.billar||{})});
 }
