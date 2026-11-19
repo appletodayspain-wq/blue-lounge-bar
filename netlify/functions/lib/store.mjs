@@ -26,10 +26,12 @@ function localStore(dir) {
   };
 }
 
-let _s;
+// En Netlify el permiso de acceso a Blobs caduca: se pide la tienda de nuevo en cada uso
+// (si se guarda entre peticiones, una función "caliente" acaba con "Token expired").
+let _local;
 export function store() {
-  if (!_s) _s = process.env.LOCAL_BLOBS ? localStore(process.env.LOCAL_BLOBS) : getStore({ name: "bar", consistency: "strong" });
-  return _s;
+  if (process.env.LOCAL_BLOBS) return (_local = _local || localStore(process.env.LOCAL_BLOBS));
+  return getStore({ name: "bar", consistency: "strong" });
 }
 
 /* Colecciones del TPV. Las que crecen sin parar se reparten en trozos por fecha de creación del id. */

@@ -253,6 +253,6 @@ export default async (req) => {
     return err("No encontrado", 404);
   } catch (e) {
     console.error(e);
-    return err(e.status === 409 ? e.message : "Error del servidor. Inténtalo otra vez.", e.status || 500);
+    return e.status === 409 ? err(e.message, 409) : err("Error del servidor. Inténtalo otra vez.", 500);
   }
 };

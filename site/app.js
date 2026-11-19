@@ -24,6 +24,7 @@ const MESAS={barra:'Barra',barra1:'Barra 1',barra2:'Barra 2',barra3:'Barra 3',bi
 function mesaLabel(m){return !m?'':/^\d+$/.test(m)?'Mesa '+m:(MESAS[m]||m)}
 let mesa=null;
 try{const q=new URLSearchParams(location.search).get('mesa');if(q&&/^([1-9]|1[01]|barra[1-3]?|billar)$/.test(q)){mesa=q;sessionStorage.setItem('blb-mesa',q)}else mesa=sessionStorage.getItem('blb-mesa')}catch(e){}
+if(/[?&]pedido=web/.test(location.search)){mesa=null;try{sessionStorage.removeItem('blb-mesa')}catch(e){}ls.set('blb-mode','recoger')}
 if(mesa&&$('#mesaBand')){$('#mesaBand').hidden=false;$('#mesaName').textContent=mesaLabel(mesa)}
 
 /* ---------- cliente registrado ---------- */
